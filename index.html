@@ -1,284 +1,185 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infográfico: Segurança Pública Municipal da Bahia (Set/2025)</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <script src="dashboard_aprimorado.js" defer></script>
-    <style>
-        /* Variáveis CSS para um tema Azul Marinho Profissional */
-        :root {
-            --cor-principal: #001f4c; /* Azul Marinho Escuro */
-            --cor-secundaria: #007bff; /* Azul Vivo */
-            --cor-fundo: #f8f9fa;
-            --cor-texto: #333;
-            --cor-destaque-sucesso: #28a745;
-            --cor-destaque-alerta: #dc3545;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 1. Cabeçalho */
-        header {
-            text-align: center;
-            padding-bottom: 30px;
-            border-bottom: 3px solid var(--cor-secundaria);
-            margin-bottom: 30px;
-        }
-
-        .logo-text {
-            color: var(--cor-principal);
-            font-size: 3em;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        .logo-subtext {
-            color: var(--cor-secundaria);
-            font-size: 1.1em;
-            margin: 0 0 15px 0;
-            font-style: italic;
-        }
-
-        h1 {
-            color: var(--cor-principal);
-            font-size: 2em;
-            margin-top: 15px;
-        }
-
-        /* 3. KPIs */
-        .kpis {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 30px 0;
-            gap: 20px;
-        }
-
-        .kpi-box {
-            background: linear-gradient(135deg, var(--cor-principal), #003366);
-            color: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            text-align: center;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .kpi-box:hover {
-            transform: translateY(-5px);
-        }
-
-        .kpi-value {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 0;
-            line-height: 1;
-        }
-
-        .kpi-label {
-            font-size: 1em;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-
-        /* Seções */
-        .section-title {
-            color: var(--cor-principal);
-            border-left: 5px solid var(--cor-secundaria);
-            padding-left: 15px;
-            margin-top: 40px;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .chart-box {
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* 2. Mapa da Bahia */
-        .mapa-bahia img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            border: 2px solid var(--cor-principal);
-            border-radius: 5px;
-        }
-        .map-description {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.1em;
-        }
-
-        /* 7. Ranking */
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.9em;
-        }
-
-        .ranking-table th, .ranking-table td {
-            border: 1px solid #eee;
-            padding: 15px;
-            text-align: left;
-        }
-
-        .ranking-table th {
-            background-color: var(--cor-principal);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .ranking-table tr:nth-child(even) {
-            background-color: #f3f3f3;
-        }
-        
-        .ranking-table tr:hover {
-            background-color: #e9ecef;
-        }
-
-        .ranking-table .melhor-proporcao {
-            background-color: var(--cor-destaque-sucesso) !important;
-            color: white;
-            font-weight: bold;
-        }
-
-        .ranking-table .pior-proporcao {
-            background-color: var(--cor-destaque-alerta) !important;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .ranking-graph-container {
-             background-color: #fff;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .kpi-box {
-                min-width: 100%;
-            }
-            .chart-grid {
-                grid-template-columns: 1fr;
-            }
-            .ranking-table th, .ranking-table td {
-                padding: 10px;
-            }
-        }
-    </style>
+    <title>Dashboard da Segurança Pública Municipal da Bahia - 2025</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <p class="logo-text">MOVAM-SE</p>
-            <p class="logo-subtext">MOVIMENTO AZUL-MARINHO PELA SEGURANÇA</p>
-            <h1>INFOGRÁFICO: SEGURANÇA PÚBLICA MUNICIPAL DA BAHIA</h1>
-            <p style="font-style: italic; color: #6c757d;">Dados atualizados até Setembro/2025</p>
-        </header>
+<body class="antialiased">
 
-        [cite_start]<h2 class="section-title">Estatísticas Chave das Guardas Civis Municipais (GCMs) [cite: 8, 20]</h2>
-        <div class="kpis">
-            <div class="kpi-box">
-                <div class="kpi-value">270</div>
-                [cite_start]<div class="kpi-label">Municípios com GCM (de 417) [cite: 8]</div>
+    <!-- Header -->
+    <header class="bg-[#0A2F5B] text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <img src="https://placehold.co/150x60/0A2F5B/FFFFFF?text=MOVAM-SE" alt="Logomarca MOVAM-SE" class="h-12 md:h-14 w-auto rounded">
+            <div class="text-center">
+                <h1 class="text-xl md:text-3xl font-bold tracking-tight">Segurança Pública Municipal da Bahia</h1>
+                <p class="text-sm md:text-base text-slate-300 mt-1">Panorama das GCMs - Dados de Setembro/2025</p>
             </div>
-            <div class="kpi-box">
-                <div class="kpi-value">64,7%</div>
-                [cite_start]<div class="kpi-label">Cobertura Municipal [cite: 13]</div>
-            </div>
-            <div class="kpi-box">
-                <div class="kpi-value">9.838</div>
-                [cite_start]<div class="kpi-label">Total de Guardas Civis Municipais [cite: 20]</div>
-            </div>
+            <div class="w-36 md:w-40"></div> <!-- Spacer -->
         </div>
-        
-        [cite_start]<h2 class="section-title">Distribuição Geográfica das GCMs na Bahia [cite: 8]</h2>
-        <div class="map-description">
-            [cite_start]<p>Dos 417 municípios da Bahia, **270** contam com GCM (em azul escuro), significando que **147** não as possuem (em cinza claro). [cite: 8]</p>
-        </div>
-        <div class="mapa-bahia">
-            <img src="Captura de tela_18-10-2025_1255_app.powerbi.com.jpeg" alt="Mapa do Estado da Bahia destacando municípios com GCM (em azul).">
-        </div>
+    </header>
 
-        [cite_start]<h2 class="section-title">Efetivo e Condições Salariais [cite: 14, 15, 43, 44]</h2>
-        <div class="chart-grid">
-            <div class="chart-box">
-                [cite_start]<h3>Efetivo por Sexo [cite: 14, 15]</h3>
-                <canvas id="chartEfetivoSexo"></canvas>
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+
+        <!-- KPIs Section -->
+        <section id="kpis" class="mb-10">
+            <h2 class="text-3xl section-title mb-6">Visão Geral</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: Municípios com GCM -->
+                <div class="bg-white p-6 rounded-xl shadow-md kpi-card flex flex-col items-center text-center">
+                    <h3 class="text-base font-semibold text-slate-500 mb-2">Municípios com GCM</h3>
+                    <p class="text-4xl font-extrabold text-[#00AEEF]">270<span class="text-2xl text-slate-400">/417</span></p>
+                    <div class="w-28 h-28 mt-3">
+                        <canvas id="municipiosChart"></canvas>
+                    </div>
+                    <p class="text-sm text-slate-500 mt-2 font-medium">64,7% dos municípios cobertos</p>
+                </div>
+
+                <!-- Card 2: Efetivo Total -->
+                <div class="bg-white p-6 rounded-xl shadow-md kpi-card flex flex-col items-center justify-center text-center">
+                    <h3 class="text-base font-semibold text-slate-500 mb-2">Efetivo Total¹</h3>
+                    <i class="fas fa-users text-4xl text-[#00AEEF] my-4"></i>
+                    <p class="text-5xl font-extrabold text-[#0A2F5B]">9.838</p>
+                    <p class="text-sm text-slate-500 mt-2 font-medium">Guardas Civis Municipais</p>
+                </div>
+
+                <!-- Card 3: Distribuição por Gênero -->
+                <div class="bg-white p-6 rounded-xl shadow-md kpi-card flex flex-col items-center justify-center text-center">
+                    <h3 class="text-base font-semibold text-slate-500 mb-2">Distribuição por Gênero¹</h3>
+                    <div class="flex items-center justify-center space-x-6 w-full my-4">
+                        <div class="text-center">
+                            <i class="fas fa-male text-4xl text-[#0A2F5B]"></i>
+                            <p class="text-2xl font-bold text-[#0A2F5B] mt-1">89,9%</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-female text-4xl text-[#E60026]"></i>
+                            <p class="text-2xl font-bold text-[#E60026] mt-1">10,1%</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500 font-medium">8.845 homens e 993 mulheres</p>
+                </div>
+
+                <!-- Card 4: Porte de Arma -->
+                <div class="bg-white p-6 rounded-xl shadow-md kpi-card flex flex-col items-center justify-center text-center">
+                    <h3 class="text-base font-semibold text-slate-500 mb-2">Municípios com Porte de Arma</h3>
+                    <i class="fa-solid fa-shield-halved text-4xl text-[#00AEEF] my-4"></i>
+                    <p class="text-5xl font-extrabold text-[#0A2F5B]">20</p>
+                    <p class="text-sm text-slate-500 mt-2 font-medium">Apenas 7,4% das GCMs existentes</p>
+                </div>
             </div>
-            <div class="chart-box">
-                [cite_start]<h3>Salário Base (em Salários Mínimos - SM) [cite: 43, 44]</h3>
-                <canvas id="chartSalarioBase"></canvas>
+            <div class="mt-6">
+                <div class="bg-sky-100 border-l-4 border-sky-500 text-sky-800 p-4 rounded-r-lg shadow-sm" role="alert">
+                    <p class="text-sm">¹ Informações obtidas do Núcleo de Estatística da Guarda Civil Municipal de Salvador (Nest).</p>
+                </div>
             </div>
-        </div>
+        </section>
 
-        [cite_start]<h2 class="section-title">Estrutura Administrativa e Operacional [cite: 100]</h2>
-        <div class="chart-box" style="width: 100%; margin-bottom: 20px;">
-            [cite_start]<h3>Índices de Estrutura (Percentual dos 270 Municípios com GCM) [cite: 100]</h3>
-            <canvas id="chartEstrutura"></canvas>
-            <p style="font-size: 0.95em; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px;">
-                [cite_start]<span style="font-weight: bold; color: var(--cor-destaque-alerta);">Alerta:</span> Apenas 7,41% dos municípios com GCM possuem Porte de Arma. [cite: 131]
-            </p>
-        </div>
+        <!-- Map Section -->
+        <section id="mapa" class="mb-10">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                 <h2 class="text-3xl section-title mb-2">Mapa da Presença das GCMs</h2>
+                 <p class="section-subtitle">Visualização geográfica dos 270 municípios baianos que possuem Guarda Civil Municipal (em azul).</p>
+                 <div class="w-full max-w-4xl mx-auto bg-slate-100 p-4 rounded-lg">
+                    <img src="https://storage.googleapis.com/static.aigent.co/notebooks/r2/Captura_de_tela_18-10-2025_1255_app.powerbi.com.jpeg" 
+                         alt="Mapa da Bahia destacando os municípios com Guarda Civil Municipal" 
+                         class="w-full h-auto object-contain rounded-md"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x600/f1f5f9/334155?text=Mapa+Indispon%C3%ADvel';">
+                 </div>
+            </div>
+        </section>
 
-        [cite_start]<h2 class="section-title">Ranking: Proporção Habitante por GCM (Municípios +100k) [cite: 160]</h2>
-        <p>A proporção ideal é o menor valor (mais GCMs por habitante). [cite_start]Dados de População de 2025 (IBGE). [cite: 161]</p>
-        
-        <div class="ranking-graph-container">
-            <h3 style="margin-top: 0;">Proporção (1 GCM para X) - Visualização</h3>
-            <canvas id="chartRankingProporcao"></canvas>
-        </div>
+        <!-- Structure Section -->
+        <section id="estrutura" class="mb-10">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                <h2 class="text-3xl section-title mb-2">Estrutura e Capacitação</h2>
+                <p class="section-subtitle">A Lei 13.022/2014 estabeleceu o estatuto geral das guardas, mas a adesão e estruturação completa ainda são desafios. As visualizações abaixo detalham a presença de estruturas essenciais.</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-xl font-bold text-center text-slate-800 mb-6">Índices de Estrutura Operacional</h3>
+                        <div id="progress-indicators-container" class="space-y-5 max-w-lg mx-auto">
+                            <!-- Progress bars will be injected here by JS -->
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-center text-slate-800 mb-6">Estrutura Administrativa e de Gestão</h3>
+                        <div class="chart-container mx-auto max-w-2xl">
+                            <canvas id="estruturaAdminChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <table class="ranking-table">
-            <thead>
-                <tr>
-                    <th>Município</th>
-                    [cite_start]<th>População Estimada (2025) [cite: 161]</th>
-                    [cite_start]<th>Efetivo [cite: 160]</th>
-                    [cite_start]<th>Proporção (1 GCM para X) [cite: 160]</th>
-                </tr>
-            </thead>
-            <tbody id="rankingTableBody">
-                </tbody>
-        </table>
-    </div>
+        <!-- Salary and Regional Analysis Section -->
+        <section id="salario-regiao" class="mb-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2 text-center">Análise Salarial</h2>
+                    <p class="text-center text-slate-600 mb-6">A remuneração reflete o nível de investimento municipal. Veja a distribuição do salário base dos GCMs.</p>
+                    <div class="chart-container mx-auto">
+                        <canvas id="salarioChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2 text-center">Análise Regional</h2>
+                    <p class="text-center text-slate-600 mb-6">Distribuição dos 20 municípios com porte de arma autorizado entre as mesorregiões da Bahia.</p>
+                    <div class="chart-container mx-auto max-w-md">
+                        <canvas id="porteRegiaoChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ranking Section -->
+        <section id="ranking">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md">
+                <h2 class="text-3xl section-title mb-2">Ranking Municipal</h2>
+                 <p class="section-subtitle">A proporção de guardas por habitante é um indicador crucial. A tabela classifica os municípios com mais de 100 mil habitantes, permitindo uma comparação da força de suas GCMs.</p>
+                <div class="mb-4 max-w-sm mx-auto">
+                    <input type="text" id="tableSearch" class="w-full p-3 border border-slate-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition" placeholder="Buscar município...">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-auto table-sortable">
+                        <thead class="bg-slate-100 text-slate-600">
+                            <tr>
+                                <th class="p-4 font-semibold tracking-wide" data-sort="municipio">Município</th>
+                                <th class="p-4 font-semibold tracking-wide text-right" data-sort="populacao">População 2025</th>
+                                <th class="p-4 font-semibold tracking-wide text-right" data-sort="efetivo">Efetivo GCM</th>
+                                <th class="p-4 font-semibold tracking-wide text-right" data-sort="proporcao">1 GCM / Hab.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody" class="divide-y divide-slate-200">
+                           <!-- Table rows will be injected here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0A2F5B] text-white text-center p-6 mt-10">
+        <p class="text-slate-300">Fonte: Infográfico MOVAM-SE 2025.</p>
+        <p class="text-xs text-slate-400 mt-1">Dados coletados de sites oficiais e estudos de órgãos e movimentos civis.</p>
+    </footer>
+
+    <!-- Custom Script -->
+    <script src="script.js" defer></script>
 </body>
 </html>
+
