@@ -1,0 +1,55 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9; /* slate-100 */
+    color: #334155; /* slate-700 */
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+}
+@media (min-width: 1024px) {
+    .chart-container {
+        height: 400px;
+    }
+}
+.kpi-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.table-sortable th {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.table-sortable th:hover {
+    background-color: #e2e8f0; /* slate-200 */
+}
+.table-sortable .sort-asc::after, .table-sortable .sort-desc::after {
+    font-size: 0.9em;
+    margin-left: 0.5rem;
+}
+.table-sortable .sort-asc::after {
+    content: '▲';
+}
+.table-sortable .sort-desc::after {
+    content: '▼';
+}
+.section-title {
+    font-weight: 800;
+    color: #0f172a; /* slate-900 */
+    text-align: center;
+}
+.section-subtitle {
+    text-align: center;
+    color: #475569; /* slate-600 */
+    max-width: 48rem; /* 768px */
+    margin: 0 auto 1.5rem;
+}
+/* Style for progress bar animation */
+.progress-bar-inner {
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
