@@ -31,24 +31,24 @@ const dashboardData = {
         labels: ['Sul Baiano', 'Nordeste Baiano', 'Centro-Norte Baiano', 'Metropolitana de Salvador', 'Outras Regiões'],
         data: [25, 25, 20, 15, 15]
     },
-    ranking: [
-        { municipio: "Salvador", populacao: 2564204, efetivo: 1375, proporcao: 1865 },
-        { municipio: "Feira de Santana", populacao: 660806, efetivo: 218, proporcao: 3031 },
-        { municipio: "Vitória da Conquista", populacao: 396613, efetivo: 197, proporcao: 2013 },
-        { municipio: "Juazeiro", populacao: 256122, efetivo: 169, proporcao: 1516 },
-        { municipio: "Lauro de Freitas", populacao: 219564, efetivo: 121, proporcao: 1815 },
-        { municipio: "Ilhéus", populacao: 196344, efetivo: 199, proporcao: 987 },
-        { municipio: "Itabuna", populacao: 189149, efetivo: 188, proporcao: 1006 },
-        { municipio: "Barreiras", populacao: 182630, efetivo: 121, proporcao: 1509 },
-        { municipio: "Porto Seguro", populacao: 171634, efetivo: 145, proporcao: 1184 },
-        { municipio: "Alagoinhas", populacao: 169201, efetivo: 164, proporcao: 1032 },
-        { municipio: "Jequié", populacao: 161196, efetivo: 159, proporcao: 1014 },
-        { municipio: "Teixeira de Freitas", populacao: 153738, efetivo: 175, proporcao: 879 },
-        { municipio: "Simões Filho", populacao: 127093, efetivo: 45, proporcao: 2824 },
-        { municipio: "Paulo Afonso", populacao: 121067, efetivo: 30, proporcao: 4036 },
-        { municipio: "Eunápolis", populacao: 119418, efetivo: 47, proporcao: 2541 },
-        { municipio: "Luís Eduardo Magalhães", populacao: 118382, efetivo: 57, proporcao: 2077 },
-        { municipio: "Santo Antônio de Jesus", populacao: 109791, efetivo: 67, proporcao: 1639 }
+   ranking: [
+        { municipio: "Salvador", populacao: 2564204, efetivo: 1375, proporcao: 1865, efetivoMaximo: 5128 },
+        { municipio: "Feira de Santana", populacao: 660806, efetivo: 218, proporcao: 3031, efetivoMaximo: 1322 },
+        { municipio: "Vitória da Conquista", populacao: 396613, efetivo: 197, proporcao: 2013, efetivoMaximo: 1190 },
+        { municipio: "Juazeiro", populacao: 256122, efetivo: 169, proporcao: 1516, efetivoMaximo: 768 },
+        { municipio: "Lauro de Freitas", populacao: 219564, efetivo: 121, proporcao: 1815, efetivoMaximo: 659 },
+        { municipio: "Itabuna", populacao: 196344, efetivo: 199, proporcao: 987, efetivoMaximo: 589 },
+        { municipio: "Ilhéus", populacao: 189149, efetivo: 188, proporcao: 1006, efetivoMaximo: 567 },
+        { municipio: "Porto Seguro", populacao: 182630, efetivo: 121, proporcao: 1509, efetivoMaximo: 548 },
+        { municipio: "Barreiras", populacao: 171634, efetivo: 145, proporcao: 1184, efetivoMaximo: 515 },
+        { municipio: "Jequié", populacao: 169201, efetivo: 164, proporcao: 1032, efetivoMaximo: 508 },
+        { municipio: "Alagoinhas", populacao: 161196, efetivo: 159, proporcao: 1014, efetivoMaximo: 484 },
+        { municipio: "Teixeira de Freitas", populacao: 153738, efetivo: 175, proporcao: 879, efetivoMaximo: 461 },
+        { municipio: "Simões Filho", populacao: 127093, efetivo: 45, proporcao: 2824, efetivoMaximo: 381 },
+        { municipio: "Eunápolis", populacao: 121067, efetivo: 30, proporcao: 4036, efetivoMaximo: 363 },
+        { municipio: "Paulo Afonso", populacao: 119418, efetivo: 47, proporcao: 2541, efetivoMaximo: 358 },
+        { municipio: "Luis Eduardo Magalhães", populacao: 118382, efetivo: 57, proporcao: 2077, efetivoMaximo: 355 },
+        { municipio: "Santo Antônio de Jesus", populacao: 109791, efetivo: 67, proporcao: 1639, efetivoMaximo: 329 }
     ]
 };
 
