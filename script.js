@@ -31,7 +31,7 @@ const dashboardData = {
         labels: ['Sul Baiano', 'Nordeste Baiano', 'Centro-Norte Baiano', 'Metropolitana de Salvador', 'Outras Regiões'],
         data: [25, 25, 20, 15, 15]
     },
-   ranking: [
+    ranking: [
         { municipio: "Salvador", populacao: 2564204, efetivo: 1375, proporcao: 1865, efetivoMaximo: 5128 },
         { municipio: "Feira de Santana", populacao: 660806, efetivo: 218, proporcao: 3031, efetivoMaximo: 1322 },
         { municipio: "Vitória da Conquista", populacao: 396613, efetivo: 197, proporcao: 2013, efetivoMaximo: 1190 },
@@ -231,7 +231,7 @@ function renderRegionalChart() {
     });
 }
 
-// 6. Render Ranking Table (Static, no animation needed here)
+// 6. Render Ranking Table
 function renderRankingTable() {
     let currentData = [...dashboardData.ranking];
     let currentSort = { key: 'populacao', asc: false };
@@ -241,7 +241,7 @@ function renderRankingTable() {
     const render = (data) => {
         tableBody.innerHTML = '';
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" class="text-center p-6 text-slate-500">Nenhum município encontrado.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center p-6 text-slate-500">Nenhum município encontrado.</td></tr>`;
             return;
         }
         data.forEach(row => {
@@ -252,6 +252,7 @@ function renderRankingTable() {
                 <td class="p-4 text-sm text-slate-600 text-right">${row.populacao.toLocaleString('pt-BR')}</td>
                 <td class="p-4 text-sm text-slate-600 text-right">${row.efetivo.toLocaleString('pt-BR')}</td>
                 <td class="p-4 text-sm text-slate-600 text-right">${row.proporcao.toLocaleString('pt-BR')}</td>
+                <td class="p-4 text-sm text-slate-600 text-right">${row.efetivoMaximo.toLocaleString('pt-BR')}</td>
             `;
             tableBody.appendChild(tr);
         });
@@ -289,11 +290,8 @@ function renderRankingTable() {
         header.addEventListener('click', () => sortData(header.dataset.sort));
     });
     
-    sortData('populacao');
-    // The initial render is now handled by the Intersection Observer, 
-    // but we can sort the initial data state here.
     currentData = [...dashboardData.ranking];
-    sortData(currentSort.key);
+    sortData('populacao');
 }
 
 // --- ANIMATION ON SCROLL LOGIC ---
@@ -308,7 +306,7 @@ const animatedElements = [
 const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const elementToRender = animatedElements.find(el => el.id === entry.target.parentElement.id || el.id === entry.target.id);
+            const elementToRender = animatedElements.find(el => el.id === entry.target.id || (entry.target.parentElement && el.id === entry.target.parentElement.id));
             if (elementToRender) {
                 elementToRender.render();
                 observer.unobserve(entry.target);
@@ -317,13 +315,14 @@ const observer = new IntersectionObserver((entries, observer) => {
     });
 }, { threshold: 0.1 });
 
+
 animatedElements.forEach(elementInfo => {
     const element = document.getElementById(elementInfo.id);
     if(element) {
-        // Observe the canvas element itself or the container for progress bars
         observer.observe(element);
     }
 });
 
 // --- INITIALIZE STATIC ELEMENTS ---
 renderRankingTable();
+
